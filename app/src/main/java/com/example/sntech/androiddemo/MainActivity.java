@@ -31,17 +31,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // turn this app into random quote app
-
-        startAllTasks();
-    }
-
-    private void startAllTasks() {
         quoteTextView = (TextView) findViewById(R.id.quote_textView);
         quoteAuthorTextView = (TextView) findViewById(R.id.quote_author_textView);
 
         quoteTextView.setVisibility(View.GONE);
         quoteAuthorTextView.setVisibility(View.GONE);
+
+        new CountDownTimer(1500, 500) {
+            @Override
+            public void onTick(long l) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                startAllTasks();
+            }
+        }.start();
+    }
+
+    private void startAllTasks() {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)
@@ -82,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
                             if (quote.getQuoteAuthor() != null) {
                                 quoteAuthorTextView.setText(getString(R.string.quote_author_hifen));
+                                quoteAuthorTextView.append(" ");
                                 if (quote.getQuoteAuthor().length() != 0) {
                                     quoteAuthorTextView.append(quote.getQuoteAuthor());
                                 } else {
@@ -117,24 +127,6 @@ public class MainActivity extends AppCompatActivity {
                 loadQuotePeriodically();
             }
         }.start();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.quote_refresh, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.refresh_button_menu:
-                getQuoteFromServer();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 }
 

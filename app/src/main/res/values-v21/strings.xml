@@ -3,6 +3,5 @@
     <string name="app_name">AndroidDemo</string>
     <string name="quote_text_view">Test</string>
     <string name="quote_author_text">Test</string>
-    <string name="quote_author_hifen">- </string>
-    <string name="menu_refresh_button">Refresh</string>
+    <string name="quote_author_hifen">-</string>
 </resources>
